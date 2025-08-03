@@ -1,0 +1,20 @@
+{
+  "name": "Weatherly-Backend",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "start": "tsx src/index.ts",
+    "deploy": "wrangler deploy --minify",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.18.1",
+    "hono": "^4.8.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2",
+    "wrangler": "^4.4.0"
+  }
+}
