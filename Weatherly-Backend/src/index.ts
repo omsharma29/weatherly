@@ -1,8 +1,11 @@
+import 'dotenv/config';
 import { serve } from '@hono/node-server'
 import { Context, Env, Hono, Input } from 'hono'
 import { WeatherByCity } from '../routers/WeatherByCity'
 import { WeatherForecast } from '../routers/WeatherForCast'
 import { Promisify, rateLimiter } from "hono-rate-limiter";
+import { withCache } from '../cache/cache';
+
 
 
 
@@ -11,7 +14,7 @@ const app = new Hono()
 
 const limiter = rateLimiter({
   windowMs: 24 * 60 * 60 * 1000, // 24 hours
-  limit: 2,
+  limit: 5,
   standardHeaders: "draft-7",
   keyGenerator: function (c: Context<Env, string, Input>): Promisify<string> {
     // Get the client IP from the request headers
@@ -25,14 +28,14 @@ const limiter = rateLimiter({
 
 app.use('/', limiter)
 
-app.get('/', async (c) => {
- 
-  return c.text('Hey');
-})
+app.get('/', withCache(async (c) => {
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  return c.json({ message: "Hello, world!" });
+}))
 app.use('/weather', limiter)
 app.use('/forecast', limiter)
-app.get('/weather', WeatherByCity)
-app.get('/forecast', WeatherForecast)
+app.get('/weather', withCache(WeatherByCity))
+app.get('/forecast', withCache(WeatherForecast))
 
 console.log('Server is running on http://localhost:3000')
 

@@ -8,6 +8,7 @@ export const WeatherByCity = async (c : any) => {
     if(!city){
         return c.text('City query parameter is required', 400)
     }
+
     const fetch = await axios.get(process.env.WEATHER_URL as string, {
       params: {
         city,

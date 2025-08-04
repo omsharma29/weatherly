@@ -8,13 +8,24 @@ export function withCache(handler: (c: any) => Promise<Response>) {
             console.log("Serving from cache:", key)
             return c.json(cache[key].data)
         }
-        const response: any = await handler(c)
-        if (response && response._data) {
+        
+        // Call the original handler
+        const response = await handler(c)
+        
+        try {
+            // Get the response data by cloning and parsing the response
+            const clonedResponse = response.clone()
+            const data = await clonedResponse.json()
+            
+            // Store in cache
             cache[key] = {
-                data: response._data,
+                data: data,
                 expiry: Date.now() + CACHE_TTL,
             }
+        } catch (error) {
+            console.error('Failed to cache response:', error)
         }
+        
         return response
     }
 }
