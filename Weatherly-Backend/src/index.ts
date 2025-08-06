@@ -5,6 +5,8 @@ import { WeatherByCity } from '../routers/WeatherByCity'
 import { WeatherForecast } from '../routers/WeatherForCast'
 import { Promisify, rateLimiter } from "hono-rate-limiter";
 import { withCache } from '../cache/cache';
+import { cors } from "hono/cors";
+
 
 
 
@@ -27,6 +29,7 @@ const limiter = rateLimiter({
 
 
 app.use('/', limiter)
+app.use('/*', cors())
 
 app.get('/', withCache(async (c) => {
   await new Promise(resolve => setTimeout(resolve, 5000));
