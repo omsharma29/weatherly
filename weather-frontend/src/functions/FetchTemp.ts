@@ -10,3 +10,4 @@ export  const FetchData = async({latitude, longitude} : Coordinates)=>{
     return response.data
    
 }
+
