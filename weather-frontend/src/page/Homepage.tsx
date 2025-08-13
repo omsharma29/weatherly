@@ -99,9 +99,9 @@ export default function Homepage() {
     <>
 
 
-      <div className="flex md:flex-row flex-col-reverse max-w-full h-screen gap-1 p-3">
+      <div className="flex md:flex-row flex-col-reverse max-w-full  gap-1 p-3">
 
-        <div className="text-black flex md:w-[60%] w-full h-full">
+        <div className="text-black flex md:w-[60%] w-full h-screen ">
           <Card className="left w-full md:h-full  bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
             <CardHeader>
               <CardTitle>Forecast</CardTitle>
@@ -137,15 +137,15 @@ export default function Homepage() {
           </Card>
         </div>
 
-        <div className="text-black flex md:w-[40%] w-full">
+        <div className="text-black flex md:w-[40%] w-full ">
           <Card className="right w-full bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
             <CardHeader>
               <CardTitle className="font-bold text-2xl">{weather?.city.name}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-10">
+            <CardContent className="flex flex-col gap-10">
+           
                 {/* Top Half */}
-                <div className="currentTemp flex-1 flex justify-around text-white">
+                <div className="currentTemp  flex md:justify-around text-white  gap-8">
                   <div>
                     <h2 className="text-5xl font-extrabold hover:scale-105 transition-transform">
                       {weather?.list?.[0]?.main?.temp !== undefined
@@ -204,24 +204,24 @@ export default function Homepage() {
                 <div className="4cards hidden md:grid flex-2 w-full gap-4 
                   md:grid-cols-2 md:grid-rows-2 sm:grid-cols-1 sm:grid-rows-4
                  ">
-                  <div className="cards flex flex-col items-center gap-10  text-white rounded-lg border h-40 border-white/50 hover:scale-105 transition-transform">
+                  <div className="cards flex flex-col items-center gap-10  text-white rounded-lg border h-40 border-white/50 hover:scale-105 transitiontransform">
                     <h2 className="text-2xl text-gray-700 font-bold pt-3">Humidity</h2>
                     <span className="text-3xl font-extrabold">{weather?.list?.[0]?.main?.humidity !== undefined ? (weather.list[0].main.humidity + " %") : "Loading"}</span>
                   </div>
-                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform">
+                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transitiontransform">
                     <h2 className="text-2xl text-gray-700 font-bold pt-3">Pressure</h2>
                     <span className="text-3xl font-extrabold">{weather?.list?.[0]?.main?.pressure !== undefined ? (weather.list[0].main.pressure + " hPa") : "Loading"}</span>
                   </div>
-                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform">
+                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transitiontransform">
                     <h2 className="text-2xl text-gray-700 font-bold pt-3">Rainfall</h2>
                     <span className="text-3xl font-extrabold">{weather?.list?.[0]?.rain?.["3h"] !== undefined ? (weather.list[0].rain["3h"] + " mm") : "Loading"} </span>
                   </div>
-                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform">
+                  <div className="cards flex flex-col items-center gap-10 text-white rounded-lg border border-white/50 hover:scale-105 transitiontransform">
                      <h2 className="text-2xl text-gray-700 font-bold pt-3">Visibility</h2>
                      <span className="text-3xl font-extrabold">{weather?.list?.[0]?.visibility !== undefined ? ((weather.list[0].visibility)/1000 + " km") : "Loading"}</span>
                   </div>
                 </div>
-              </div>
+             
 
 
             </CardContent>
