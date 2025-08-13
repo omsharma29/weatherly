@@ -2,16 +2,37 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { FetchData } from "../functions/FetchTemp";
 import axios from "axios";
+import HourWiseTemp from "../pageComps/HourWiseTemp";
+import DayWiseTemp from "../pageComps/DayWiseTemp";
+
+export type WeatherComps = {
+  dt: number;
+  main: { temp: number };
+  weather: { icon: string; description: string }[];
+};
+
+export type WeatherApiResponse = {
+  city: {
+    coord: { lat: number; lon: number };
+    country: string;
+    id: number;
+    name: string;
+    population: number;
+    sunrise: number;
+    sunset: number;
+    timezone: number;
+  };
+  cnt: number;
+  cod: string;
+  list: WeatherComps[];
+};
 
 
-type WeatherProps = {
-  setWeather: React.Dispatch<React.SetStateAction<never[]>>
-}
 
 export default function Homepage() {
 
   const [error, setError] = useState<string | null>(null)
-  const [weather, setWeather] = useState<WeatherProps>()
+  const [weather, setWeather] = useState<WeatherApiResponse>()
 
   useEffect(() => {
     const LoadWeather = async () => {
@@ -71,29 +92,43 @@ export default function Homepage() {
 
   return (
     <>
+
+  
       <div className="flex md:flex-row flex-col-reverse max-w-full h-screen gap-1 p-3">
 
         <div className="text-black flex md:w-[60%] w-full h-full">
-          <Card className="left w-full md:h-full bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
+          <Card className="left w-full md:h-full  bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
             <CardHeader>
               <CardTitle>Forecast</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="input"></div>
-              <div className="HourWiseTemp">
-               { /**
-                * 1st 4 days
-                */}
+            {/* Input Section */}
+            <div className="w-full">
+              <input
+                type="text"
+                placeholder="Enter city name..."
+                className="w-full px-4 py-1 rounded-xl border focus:outline-none focus:ring-2 shadow-sm text-gray-700"
+              />
+            </div>
+            <CardContent className="flex flex-col md:justify-center gap-10  h-[600px] w-full ">
+
+
+              {/* Hourly Temperature */}
+              <div className=" w-full ">
+                <h2>Temperature Hours</h2>
+                <HourWiseTemp weather={weather?.list} />
+
               </div>
-              <div>
-                <h2>Next 5 days Temperature</h2>
+
+              {/* 5 Days Temperature */}
+              <div className=" ">
+                <h2>Temprature day wise</h2>
                 <div className="5daysTemp">
-                  {/**
-                   * rest 5 days
-                   */}
+                  <DayWiseTemp weather={weather?.list} />
                 </div>
               </div>
+
             </CardContent>
+
           </Card>
         </div>
 
