@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { FetchData } from "../functions/FetchTemp";
+import { FetchData, FetchLatLong } from "../functions/FetchTemp";
 import axios from "axios";
 import HourWiseTemp from "../pageComps/HourWiseTemp";
 import DayWiseTemp from "../pageComps/DayWiseTemp";
@@ -50,6 +50,7 @@ export default function Homepage() {
   const [error, setError] = useState<string | null>(null)
   const [weather, setWeather] = useState<WeatherApiResponse>()
   const [loading, setloading] = useState<Boolean>(false)
+  const [city, setCity] = useState<string>("")
 
   const weatherBg = () => {
     if (!weather) return null;
@@ -113,6 +114,18 @@ export default function Homepage() {
     LoadWeather()
   }
     , [])
+  
+    useEffect(()=>{
+      const fetchData = async()=>{
+        if(!city){
+          console.log("plase enter the city")
+        }
+        const data = FetchLatLong(city)
+        console.log(data)
+      }
+
+      fetchData()
+    }, [city])
 
   if (error) return <div className="h-screen bg-black flex justify-center items-center">
     <p className="text-red-500 font-semibold">{error}</p>
@@ -155,6 +168,8 @@ const nearestHour = futureHours?.reduce((prev : WeatherComps, curr :WeatherComps
                 <input
                   type="text"
                   placeholder="Enter city name..."
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   className="w-full px-4 py-1 rounded-xl border focus:outline-none focus:ring-2 shadow-sm text-gray-700"
                 />
               </div>
@@ -226,8 +241,8 @@ const nearestHour = futureHours?.reduce((prev : WeatherComps, curr :WeatherComps
                         : "Loading..."}
                     </h2>
                     <img
-                      src={`https://openweathermap.org/img/wn/${weather?.list[0].weather[0].icon}@2x.png`}
-                      alt={weather?.list[0].weather[0].icon}
+                      src={`https://openweathermap.org/img/wn/${nearestHour?.weather[0].icon}@2x.png`}
+                      alt={nearestHour?.weather[0].icon}
                       className="w-20 h-20 hover:scale-120 transition-transform"
                     />
                     <span className="text-base font-medium text-gray-600">
@@ -286,7 +301,7 @@ const nearestHour = futureHours?.reduce((prev : WeatherComps, curr :WeatherComps
                   </div>
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Rainfall</h2>
-                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.rain?.["3h"] !== undefined ? (nearestHour?.rain["3h"] + " mm") : "Loading"} </span>
+                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.rain?.["3h"] !== undefined ? (nearestHour?.rain["3h"] + " mm") : "No"} </span>
                   </div>
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Visibility</h2>
