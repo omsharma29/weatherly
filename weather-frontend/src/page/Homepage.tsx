@@ -53,7 +53,7 @@ export default function Homepage() {
 
   const weatherBg = () => {
     if (!weather) return null;
-    const mainWeather = weather.list[0].weather[0].main
+    const mainWeather = nearestHour?.weather[0].main
     if (mainWeather == "Rain") return weatherVideos.Rainy;
     if (mainWeather === "Mist") return weatherVideos.Mist;
     if (mainWeather === "Clouds") return weatherVideos.Sunny;
@@ -118,6 +118,16 @@ export default function Homepage() {
     <p className="text-red-500 font-semibold">{error}</p>
   </div>
 
+  const now = new Date();
+
+// Filter only future times
+const futureHours = weather?.list.filter(hour => new Date(hour.dt_txt) >= now)
+
+const nearestHour = futureHours?.reduce((prev : WeatherComps, curr :WeatherComps ) => {
+  const prevDiff = Math.abs(new Date(prev.dt_txt).getTime() - now.getTime() )
+  const currDiff = Math.abs(new Date(curr.dt_txt).getTime() - now.getTime() )
+   return currDiff < prevDiff ? curr : prev;
+})
 
 
   return (
@@ -211,8 +221,8 @@ export default function Homepage() {
                 <div className="currentTemp  flex md:justify-around text-white  gap-8">
                   <div>
                     <h2 className="text-5xl font-extrabold hover:scale-105 transition-transform">
-                      {weather?.list?.[0]?.main?.temp !== undefined
-                        ? (weather.list[0].main.temp - 273.15).toFixed(1) + "°C"
+                      {nearestHour?.main.temp !== undefined
+                        ? (nearestHour?.main.temp - 273.15).toFixed(1) + "°C"
                         : "Loading..."}
                     </h2>
                     <img
@@ -222,7 +232,7 @@ export default function Homepage() {
                     />
                     <span className="text-base font-medium text-gray-600">
                       {weather?.list?.[0]?.dt_txt !== undefined ?
-                        new Date(weather?.list[0].dt_txt).toLocaleTimeString([], {
+                        new Date().toLocaleTimeString([], {
                           weekday: "short",  // e.g. "Wed"
                           year: "numeric",
                           month: "short",    // e.g. "Aug"
@@ -238,24 +248,24 @@ export default function Homepage() {
                   <div className="flex flex-col justify-evenly">
                     <h2 className="font-bold text-gray-600"> Feels Like:
                       <span className="text-white">
-                        {weather?.list?.[0]?.main?.temp !== undefined
-                          ? " " + (weather.list[0].main.feels_like - 273.15).toFixed(1) + "°C"
+                        {nearestHour?.main.feels_like !== undefined
+                          ? " " + (nearestHour?.main.feels_like - 273.15).toFixed(1) + "°C"
                           : "Loading..."}
                       </span>
 
                     </h2>
                     <h2 className="font-bold text-gray-600"> Max Temp:
                       <span className="text-white">
-                        {weather?.list?.[0]?.main?.temp !== undefined
-                          ? " " + (weather.list[0].main.temp_max - 273.15).toFixed(1) + "°C"
+                        {nearestHour?.main.temp_max !== undefined
+                          ? " " + (nearestHour?.main.temp_max - 273.15).toFixed(1) + "°C"
                           : "Loading..."}
                       </span>
 
                     </h2>
                     <h2 className="font-bold text-gray-600"> Min Temp:
                       <span className="text-white">
-                        {weather?.list?.[0]?.main?.temp !== undefined
-                          ? " " + (weather.list[0].main.temp_min - 273.15).toFixed(1) + "°C"
+                        {nearestHour?.main.temp_min !== undefined
+                          ? " " + (nearestHour?.main.temp_min - 273.15).toFixed(1) + "°C"
                           : "Loading..."}
                       </span>
 
@@ -268,19 +278,19 @@ export default function Homepage() {
                  ">
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Humidity</h2>
-                    <span className="text-lg md:text-2xl font-extrabold">{weather?.list?.[0]?.main?.humidity !== undefined ? (weather.list[0].main.humidity + " %") : "Loading"}</span>
+                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.main.humidity !== undefined ? (nearestHour?.main.humidity + " %") : "Loading"}</span>
                   </div>
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Pressure</h2>
-                    <span className="text-lg md:text-2xl font-extrabold">{weather?.list?.[0]?.main?.pressure !== undefined ? (weather.list[0].main.pressure + " hPa") : "Loading"}</span>
+                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.main.pressure !== undefined ? (nearestHour?.main.pressure + " hPa") : "Loading"}</span>
                   </div>
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Rainfall</h2>
-                    <span className="text-lg md:text-2xl font-extrabold">{weather?.list?.[0]?.rain?.["3h"] !== undefined ? (weather.list[0].rain["3h"] + " mm") : "Loading"} </span>
+                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.rain?.["3h"] !== undefined ? (nearestHour?.rain["3h"] + " mm") : "Loading"} </span>
                   </div>
                   <div className="cards flex flex-col items-center gap-2 md:gap-4 text-white rounded-lg border border-white/50 hover:scale-105 transition-transform p-3 w-full min-h-[120px] md:min-h-[160px]">
                     <h2 className="text-sm md:text-xl text-gray-700 font-bold pt-1 md:pt-2">Visibility</h2>
-                    <span className="text-lg md:text-2xl font-extrabold">{weather?.list?.[0]?.visibility !== undefined ? ((weather.list[0].visibility) / 1000 + " km") : "Loading"}</span>
+                    <span className="text-lg md:text-2xl font-extrabold">{nearestHour?.visibility !== undefined ? ((nearestHour?.visibility) / 1000 + " km") : "Loading"}</span>
                   </div>
                 </div>
 
