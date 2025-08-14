@@ -25,8 +25,8 @@ function HourWiseTemp({ weather }: WeatherProps) {
     );
 
     return (
-        <div className="w-full p-4 rounded-xl shadow-md overflow-x-auto no-scrollbar ">
-            <div className="flex gap-5 min-w-max">
+        <div className="w-full p-4 rounded-xl shadow-md h-[260px] overflow-y-auto md:h-auto md:overflow-x-auto no-scrollbar">
+            <div className="grid grid-cols-2 gap-5 md:flex md:gap-5 md:min-w-max">
                 {dailyWeather.map((day, index) => (
                     <div
                         key={index}

@@ -99,12 +99,12 @@ export default function Homepage() {
     <>
 
 
-      <div className="flex md:flex-row flex-col-reverse max-w-full  gap-1 p-3">
+      <div className="flex md:flex-row flex-col-reverse max-w-full  gap-1 p-3 overflow-x-hidden box-border">
 
-        <div className="text-black flex md:w-[60%] w-full h-screen ">
-          <Card className="left w-full md:h-full  bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
+        <div className="text-black flex md:w-[60%] w-full max-w-full  ">
+          <Card className="left w-full md:h-full  bg-black/40 backdrop-blur-md text-white p-6 rounded-xl box-border">
             <CardHeader>
-              <CardTitle>Forecast</CardTitle>
+              <CardTitle className="text-2xl font-extrabold">Weatherly - forecast</CardTitle>
             </CardHeader>
             {/* Input Section */}
             <div className="w-full">
@@ -114,7 +114,7 @@ export default function Homepage() {
                 className="w-full px-4 py-1 rounded-xl border focus:outline-none focus:ring-2 shadow-sm text-gray-700"
               />
             </div>
-            <CardContent className="flex flex-col md:justify-center gap-10  h-[600px] w-full ">
+            <CardContent className="flex flex-col md:justify-center gap-10  w-full ">
 
 
               {/* Hourly Temperature */}
@@ -137,8 +137,8 @@ export default function Homepage() {
           </Card>
         </div>
 
-        <div className="text-black flex md:w-[40%] w-full ">
-          <Card className="right w-full bg-black/40 backdrop-blur-md text-white p-6 rounded-xl">
+        <div className="text-black flex md:w-[40%] w-full max-w-full ">
+          <Card className="right w-full bg-black/40 backdrop-blur-md text-white p-6 rounded-xl box-border">
             <CardHeader>
               <CardTitle className="font-bold text-2xl">{weather?.city.name}</CardTitle>
             </CardHeader>
