@@ -39,12 +39,7 @@ export type WeatherApiResponse = {
   list: WeatherComps[];
 };
 
-export interface Coordinates {
-  coord: {
-    lon: string;
-    lat: string;
-  };
-}
+
 
 
 
@@ -60,7 +55,6 @@ export default function Homepage() {
   const [weather, setWeather] = useState<WeatherApiResponse>()
   const [loading, setloading] = useState<Boolean>(false)
   const [city, setCity] = useState<string>("")
-  const [cityWeather, setCityWeather] = useState<Coordinates | undefined>()
 
   const weatherBg = () => {
     if (!weather) return null;
