@@ -12,7 +12,7 @@ export const WeatherForecast = async (c: any) => {
 
   try {
     const response = await axios.get(
-      process.env.WEATHER_FORECAST_URL as string,
+      c.env.WEATHER_FORECAST_URL as string,
       {
         params: {
           latitude : latitude,
@@ -20,8 +20,8 @@ export const WeatherForecast = async (c: any) => {
           lang: "EN",
         },
         headers: {
-          "x-rapidapi-key": process.env.RAPIDAPI_KEY as string,
-          "x-rapidapi-host": process.env.RAPIDAPI_HOST as string,
+          "x-rapidapi-key": c.env.RAPIDAPI_KEY as string,
+          "x-rapidapi-host": c.env.RAPIDAPI_HOST as string,
         },
       }
     )

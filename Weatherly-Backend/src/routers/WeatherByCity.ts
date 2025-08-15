@@ -9,14 +9,14 @@ export const WeatherByCity = async (c : any) => {
         return c.text('City query parameter is required', 400)
     }
 
-    const fetch = await axios.get(process.env.WEATHER_URL as string, {
+    const fetch = await axios.get(c.env.WEATHER_URL as string, {
       params: {
         city,
         lang: 'EN',
       },
       headers: {
-        'x-rapidapi-key': process.env.RAPIDAPI_KEY as string,
-        'x-rapidapi-host': process.env.RAPIDAPI_HOST as string,
+        'x-rapidapi-key': c.env.RAPIDAPI_KEY as string,
+        'x-rapidapi-host': c.env.RAPIDAPI_HOST as string,
       }
     })
     return c.json(fetch.data, 200)
