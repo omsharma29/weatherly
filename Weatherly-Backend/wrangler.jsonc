@@ -1,38 +1,29 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "weatherly-backend",
-  "main": "src/index.ts",
-  "compatibility_date": "2025-08-03"
-  // "compatibility_flags": [
-  //   "nodejs_compat"
-  // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "MY_KV_NAMESPACE",
-  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  //   }
-  // ],
-  // "r2_buckets": [
-  //   {
-  //     "binding": "MY_BUCKET",
-  //     "bucket_name": "my-bucket"
-  //   }
-  // ],
-  // "d1_databases": [
-  //   {
-  //     "binding": "MY_DB",
-  //     "database_name": "my-database",
-  //     "database_id": ""
-  //   }
-  // ],
-  // "ai": {
-  //   "binding": "AI"
-  // },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // }
+  "main": "dist/index.js", // compiled TS output
+  "compatibility_date": "2025-08-15",
+
+  // Optional: enable Node.js compatibility if needed
+  // "compatibility_flags": ["nodejs_compat"],
+
+  // Default environment variables
+  "vars": {
+    "RAPIDAPI_KEY": "60290f8d9emsh938c219f51767f0p1902fcjsnc466c5d5ec19",
+    "RAPIDAPI_HOST": "open-weather13.p.rapidapi.com",
+    "WEATHER_URL": "https://open-weather13.p.rapidapi.com/city",
+    "WEATHER_FORECAST_URL": "https://open-weather13.p.rapidapi.com/fivedaysforcast"
+  },
+
+  // Optional: define production-specific environment
+  "env": {
+    "production": {
+      "vars": {
+        "RAPIDAPI_KEY": "60290f8d9emsh938c219f51767f0p1902fcjsnc466c5d5ec19",
+        "RAPIDAPI_HOST": "open-weather13.p.rapidapi.com",
+        "WEATHER_URL": "https://open-weather13.p.rapidapi.com/city",
+        "WEATHER_FORECAST_URL": "https://open-weather13.p.rapidapi.com/fivedaysforcast"
+      }
+    }
+  }
 }

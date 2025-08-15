@@ -13,6 +13,7 @@ dist/
 
 # deps
 node_modules/
+wrangler.jsonc
 .wrangler
 
 
@@ -21,6 +22,7 @@ node_modules/
 .env.production
 .dev.vars
 wrangler.toml
+wrangler.jsonc
 
 # logs
 logs/
