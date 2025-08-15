@@ -119,7 +119,7 @@ export default function Homepage() {
   }
     , [])
 
-  const debouncedCity = useDebounce(city, 5000); // 500ms after user stops typing
+  const debouncedCity = useDebounce(city, 2000); // 500ms after user stops typing
 
   useEffect(() => {
     if (!debouncedCity) return;
