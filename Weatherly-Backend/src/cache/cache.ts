@@ -30,4 +30,3 @@ export function withCache(handler: (c: any) => Promise<Response>) {
     }
 }
 
-

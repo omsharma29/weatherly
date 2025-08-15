@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import { serve } from '@hono/node-server'
 import { Context, Env, Hono, Input } from 'hono'
-import { WeatherByCity } from '../routers/WeatherByCity'
-import { WeatherForecast } from '../routers/WeatherForCast'
+import { WeatherByCity } from './routers/WeatherByCity'
+import { WeatherForecast } from './routers/WeatherForCast'
 import { Promisify, rateLimiter } from "hono-rate-limiter";
-import { withCache } from '../cache/cache';
+import { withCache } from './cache/cache';
 import { cors } from "hono/cors";
 
 
@@ -42,7 +41,7 @@ app.get('/forecast', withCache(WeatherForecast))
 
 console.log('Server is running on http://localhost:3000')
 
-serve({
-  fetch: app.fetch,
-  port: 3000,
-})
+// serve({
+//   fetch: app.fetch,
+//   port: 3000,
+// })
