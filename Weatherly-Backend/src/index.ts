@@ -16,7 +16,7 @@ const app = new Hono()
 
 const limiter = rateLimiter({
   windowMs: 24 * 60 * 60 * 1000, // 24 hours
-  limit: 5,
+  limit: 2,
   standardHeaders: "draft-7",
   keyGenerator: function (c: Context<Env, string, Input>): Promisify<string> {
     // Get the client IP from the request headers
